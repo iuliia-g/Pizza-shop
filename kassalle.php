@@ -47,14 +47,19 @@ $_SESSION['cart'] = [];
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fi">
 <head>
-<meta charset="UTF-8">
-<title>Tilaus vahvistettu</title>
+    <meta charset="UTF-8">
+    <title>Tilaus vahvistettu</title>
+    <link rel="stylesheet" href="tyyli.css">
 </head>
 <body>
-    <h1>Tilaus valmis!</h1>
-    <p>Tilausnumero: <?= $tilausID ?></p>
-    <p><a href="index.php">Takaisin kauppaan</a></p>
+    <main class="confirmation-container">
+        <div class="confirmation-card">
+            <h1>🎉 Kiitos tilauksestasi! 🎉</h1>
+            <p class="order-id">Tilausnumero: <strong><?= $tilausID ?></strong></p>
+            <p class="back-link"><a href="index.php">⬅️ Takaisin kauppaan</a></p>
+        </div>
+    </main>
 </body>
 </html>

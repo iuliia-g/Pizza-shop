@@ -71,74 +71,52 @@ $kategoriat =$conn->query("SELECT * FROM kategoriat");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="tyyli.css"> 
     <title>Kategoriat</title>
 </head>
 <body>
-    <h1>Kategoriat</h1>
+    <main>
+    <h1>🍕 Kategoriat 🍕</h1>
 
     <?php if (isset($_SESSION['msg'])): ?>
-        <?php
-            $msg = $_SESSION['msg'];
-            $color = $msg["type"] === "success" ? "#d4edda" : "#f8d7da";     
-            $textColor = $msg["type"] === "success" ? "#155724" : "#721c24";     
-            $border = $msg["type"] === "success" ? "#c3e6cb" : "#f5c6cb";     
-        ?>
-
-        <div id="notif" style="
-            background-color: <?= $color ?>;
-            color: <?= $textColor ?>;
-            padding: 10px 15px;
-            border: 1px solid <?= $border ?>;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            font-weight: bold;
-        ">
-
-        <?= htmlspecialchars($msg['text']) ?>
-    </div>
-    <?php unset($_SESSION['msg']); ?>
-    <script>
-        setTimeout(() => {
-            const box = document.getElementById("notif");
-            if (box) {
-                box.style.transition = "opacity 0.5s ease";
-                box.style.opacity = "0";
-                setTimeout(() => box.remove(), 500);
-            }
-        }, 3000);
-        </script>
+        <div id="notif"><?= htmlspecialchars($_SESSION['msg']['text']) ?></div>
+        <?php unset($_SESSION['msg']); ?>
     <?php endif; ?>
 
-    <!-- LOMAKKE: LISÄÄ UUSI KATEGORIA -->
-     <h1>Lisää uusi kategoria</h1>
-     <form method="post">  
-        Nimi: <input type="text" name="nimi" required>
-        <button type="submit" name="add">Lisää</button>
-    </form>
-
-    <!-- TAULUKKO: LISTATAAN KAIKKI KATEGORIAT -->
-    <h2>Nykyiset kategoriat</h2>
-<table border="1" cellpadding="5">
-    <tr>
-        <th>ID</th>
-        <th>Nimi</th>
-        <th>Toiminnot</th>
-    </tr>
-    <?php while ($row = $kategoriat->fetch_assoc()) { ?>
+    <section class="add-category">
+        <h3>Lisää uusi kategoria</h3>
         <form method="post">
-            <tr>
-                <td><?= $row['id'] ?></td>
-                <td>
-                    <input type="text" name="nimi" value="<?= htmlspecialchars($row['nimi']) ?>">
-                </td>
-                <td>
-                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                    <button type="submit" name="muokkaa">Muokkaa</button>
-                    <button type="submit" name="poista" onclick="return confirm('Haluatko varmasti poistaa tämän kategorian?')">Poista</button>
-                </td>
-            </tr>
+            <label for="nimi">Nimi:</label>
+            <input type="text" name="nimi" required>
+            <button type="submit" name="add">Lisää</button>
         </form>
-    <?php } ?>
-</table>
+    </section>
+
+    <section class="category-table">
+        <h3>Nykyiset kategoriat</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nimi</th>
+                <th>Toiminnot</th>
+            </tr>
+            <?php while ($row = $kategoriat->fetch_assoc()) { ?>
+                <form method="post">
+                    <tr>
+                        <td><?= $row['id'] ?></td>
+                        <td>
+                            <input type="text" name="nimi" value="<?= htmlspecialchars($row['nimi']) ?>">
+                        </td>
+                        <td>
+                            <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                            <button type="submit" name="muokkaa">Muokkaa</button>
+                            <button type="submit" name="poista" onclick="return confirm('Haluatko varmasti poistaa tämän kategorian?')">Poista</button>
+                        </td>
+                    </tr>
+                </form>
+            <?php } ?>
+        </table>
+    </section>
+</main>
 </body>
 </html>

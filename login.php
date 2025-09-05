@@ -30,22 +30,47 @@ if (isset($_POST['login'])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fi">
 <head>
     <meta charset="UTF-8">
     <title>Kirjaudu</title>
+    <link rel="stylesheet" href="tyyli.css">
 </head>
 <body>
-    <h1>Kirjaudu</h1>
+    <main>
+        <h1>Kirjaudu sisään</h1>
 
-    <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+        <?php if (isset($error)): ?>
+            <div id="notif" style="
+                background-color: #f8d7da;
+                color: #721c24;
+                padding: 10px 15px;
+                border: 1px solid #f5c6cb;
+                border-radius: 5px;
+                margin: 15px auto;
+                max-width: 400px;
+                text-align: center;
+                font-weight: bold;
+            ">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
 
-    <form method="post">
-        Käyttäjätunnus: <input type="text" name="username" required><br>
-        Salasana: <input type="password" name="password" required><br>
-        <button type="submit" name="login">Kirjaudu</button>
-    </form>
+        <section style="max-width: 400px; margin: 0 auto;">
+            <form method="post">
+                <label for="username">Käyttäjätunnus:</label><br>
+                <input type="text" name="username" id="username" required><br><br>
 
-    <p><a href="rekisterointi.php">Rekisteröidy</a></p>
+                <label for="password">Salasana:</label><br>
+                <input type="password" name="password" id="password" required><br><br>
+
+                <button type="submit" name="login">Kirjaudu</button>
+            </form>
+
+            <p style="text-align:center; margin-top: 20px;">
+                <a href="rekisterointi.php">Rekisteröidy</a>
+            </p>
+        </section>
+    </main>
 </body>
 </html>

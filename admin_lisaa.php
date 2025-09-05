@@ -26,20 +26,28 @@ $kategoriat = $conn->query("SELECT * FROM kategoriat");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lisää tuote</title>
+    <link rel="stylesheet" href="tyyli.css">
 </head>
 <body>
-    <h1>Lisää uusi tuote</h1>
-    <form method="post">
-        Nimi: <input type="text" name="nimi" required><br><br>
-        Hinta: <input type="number" step="0.01" name="hinta" required><br><br>
-        Kategoria:
-        <select name="kategoria_id">
-            <?php while ($k = $kategoriat->fetch_assoc()): ?>
-                <option value="<?= $k['id'] ?>"><?= $k['nimi'] ?></option>
-            <?php endwhile; ?>
-        </select><br><br>
-        Kuvan tiedostonimi (esim. margherita.jpg): <input type="text" name="kuva_url"><br><br>
-        <button type="submit" name="add">Lisää tuote</button>
-    </form>
+    <main class="form-container">
+        <h1>🍕 Lisää uusi tuote 🍕</h1>
+
+        <form method="post" class="styled-form">
+            <label for="nimi">Nimi:</label>
+            <input type="text" name="nimi" id="nimi" required>
+
+            <label for="hinta">Hinta (€):</label>
+            <input type="number" step="0.01" name="hinta" id="hinta" required>
+
+            <label for="kategoria_id">Kategoria:</label> 
+            <select name="kategoria_id" id="kategoria_id">
+                <?php while ($k = $kategoriat->fetch_assoc()): ?>
+                    <option value="<?= $k['id'] ?>"><?= htmlspecialchars($k['nimi']) ?></option>
+                <?php endwhile; ?>
+            </select>
+            
+            <br><br><button type="submit" name="add">➕ Lisää tuote</button>
+        </form>
+    </main>
 </body>
 </html>
